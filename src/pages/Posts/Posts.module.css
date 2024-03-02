@@ -1,0 +1,18 @@
+.post {
+    background: #123;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.post:nth-child(2) {
+    margin-top: 60px;
+}
+
+.post h2 {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.post p {
+    padding: 50px;
+}

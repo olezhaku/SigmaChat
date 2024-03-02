@@ -1,0 +1,50 @@
+.select {
+    border: 3px black solid;
+    border-radius: 10px;
+    height: 39px;
+    cursor: pointer;
+    transition: all 0.2s linear;
+    position: absolute;
+    z-index: 1000;
+    right: 10px;
+    left: 10px;
+}
+
+.select:hover {
+    background: #123;
+}
+
+.option_default,
+.option p {
+    padding: 10px;
+}
+
+.active {
+    height: auto;
+    background: #123;
+    transition: all 0.2s linear;
+}
+
+.select,
+.active:hover {
+    background: black;
+}
+
+.option {
+    margin: auto;
+    border-radius: 0 0 7px 7px;
+}
+
+.option:not(:last-child) {
+    border-radius: 0;
+}
+
+.option:hover {
+    background: white;
+    color: black;
+}
+
+.selected,
+.selected:hover {
+    background: teal;
+}

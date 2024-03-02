@@ -1,0 +1,23 @@
+.btn {
+    white-space: nowrap;
+    padding: 10px;
+    border-radius: 10px;
+    background: black;
+    border: 3px black solid;
+    color: white;
+    transition: all 0.2s linear;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #123;
+    border: 3px solid black;
+}
+
+.btn:disabled {
+    cursor: auto;
+}
+
+.btn:hover:disabled {
+    background: black;
+}

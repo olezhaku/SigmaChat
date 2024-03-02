@@ -1,0 +1,146 @@
+/* design */
+.grid_container {
+    display: flex;
+    height: 100%;
+    gap: 10px;
+}
+
+.left_side {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    gap: 10px;
+}
+
+.right_side {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap: 10px;
+}
+
+.input_conteiner {
+    display: flex;
+    gap: 10px;
+}
+
+.message_input {
+    width: 100%;
+}
+
+.field {
+    height: 100%;
+    border: 3px solid black;
+    border-radius: 10px;
+    position: relative;
+}
+
+/* open dialod */
+
+.open_dialog {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+}
+
+.message_container {
+    display: flex;
+    justify-content: end;
+    margin: 5px 10px;
+    transition: all 0.2s linear;
+}
+
+.message_container_reversed {
+    margin: 5px 10px;
+    transition: all 0.2s linear;
+}
+
+.message {
+    background: black;
+    width: fit-content;
+    max-width: 80%;
+    border-radius: 10px;
+    padding: 10px;
+    word-wrap: break-word;
+}
+
+.message_reversed {
+    background: #222;
+    width: fit-content;
+    max-width: 80%;
+    border-radius: 10px;
+    padding: 10px;
+    word-wrap: break-word;
+}
+
+.message_container_reversed:first-child,
+.message_container:first-child {
+    margin-bottom: 10px;
+}
+
+.message_container_reversed:last-child,
+.message_container:last-child {
+    margin-top: 10px;
+}
+
+.message_text {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.message_time {
+    color: grey;
+    text-align: end;
+}
+
+.message_time_reversed {
+    color: grey;
+}
+
+/* dialogs */
+.dialogs {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    border-radius: 7px;
+}
+
+.my_dialogs {
+    height: 48px;
+    padding: 10px;
+    position: relative;
+    /* border-right: red solid 3px; */
+    transition: all 0.2s linear;
+}
+
+.my_dialogs:hover {
+    background: white;
+    color: black;
+}
+
+.my_dialogs_names {
+    margin-bottom: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+.my_dialogs_text {
+    color: gray;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+.my_dialogs_current {
+    height: 48px;
+    background: teal;
+    padding: 10px;
+    position: relative;
+}

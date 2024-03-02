@@ -1,0 +1,10 @@
+.error_back {
+    position: absolute;
+    background: #123;
+    top: 10px;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    border-radius: 10px;
+    padding: 10px;
+}

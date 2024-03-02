@@ -1,0 +1,46 @@
+.login_back {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    background: #123;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.login {
+    border-right: 3px solid white;
+    border-radius: 10px 0 0 10px;
+}
+
+.register {
+    border-radius: 0 10px 10px 0;
+    text-decoration: none;
+    color: white;
+    font-size: "Montserrat", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.login,
+.register {
+    cursor: pointer;
+    padding: 10px;
+    transition: all 0.2s linear;
+}
+
+.register:hover {
+    background: white;
+    color: black;
+}
+
+.active {
+    background: teal;
+}
