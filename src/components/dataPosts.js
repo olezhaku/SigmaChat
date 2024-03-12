@@ -10,9 +10,9 @@ export const users = [
     { userID: 1, username: "misterProper", password: "password123" },
     { userID: 2, username: "olezhaku", password: "password123" },
     { userID: 3, username: "prostochlen", password: "password123" },
-    { userID: 4, username: "VladimirPutin", password: "password123" },
-    { userID: 5, username: "Adolf_Hitler", password: "password123" },
-    { userID: 6, username: "Obema", password: "password123" },
+    { userID: 4, username: "Vladimir1337", password: "password123" },
+    { userID: 5, username: "designer", password: "password123" },
+    { userID: 6, username: "Omega", password: "password123" },
     { userID: 7, username: "<3", password: "password123" },
     { userID: 8, username: "admin", password: "password123" },
 ];
