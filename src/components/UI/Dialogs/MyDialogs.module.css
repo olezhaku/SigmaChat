@@ -1,0 +1,43 @@
+.container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    border-radius: 7px;
+}
+
+.dialogs {
+    height: 48px;
+    padding: 10px;
+    position: relative;
+    /* border-right: red solid 3px; */
+    transition: all 0.2s linear;
+}
+
+.dialogs:hover {
+    background: white;
+    color: black;
+}
+
+.names {
+    margin-bottom: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+.text {
+    color: gray;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+.dialogs__current {
+    height: 48px;
+    background: teal;
+    padding: 10px;
+    position: relative;
+}

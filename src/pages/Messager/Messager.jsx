@@ -1,48 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyInput from "../../components/UI/Input/MyInput";
 import MyButton from "../../components/UI/Button/MyButton";
 import classes from "./Messager.module.css";
-import { users } from "../../components/dataPosts";
+import MyDialog from "../../components/UI/Dialog/MyDialog";
+
+import { dataFetching } from "../../api/dataFetching";
+import MyDialogs from "../../components/UI/Dialogs/MyDialogs";
 
 const Messager = () => {
     //hooks
     const [inputValue, setInputValue] = useState("");
     const [searchValue, setSearchValue] = useState("");
-    const [message, setMessage] = useState([]);
     const [dialogs, setDialogs] = useState([]);
     const [isActive, setIsActive] = useState(null);
+    const [message, setMessage] = useState([]);
+    //
+    const [users, setUsers] = useState([]);
 
     //search
     const handleSearchChange = (event) => {
         setSearchValue(event.target.value);
     };
 
+    //users
+    useEffect(() => {
+        async function dataUsers() {
+            try {
+                setUsers(await dataFetching());
+            } catch (error) {
+                // console.error(error);
+            }
+        }
+        dataUsers();
+    }, [users]);
+
     //dialogs
     const createDialog = (id) => {
         if (searchValue.trim() !== "") {
             const existingDialog = dialogs.find(
-                (dialog) => dialog.userID === users[id].userID
+                (dialog) => dialog.userId === users[id].id
             );
 
             if (!existingDialog) {
                 const newDialog = {
-                    dialogID: dialogs.length,
+                    dialogId: dialogs.length,
                     isCurrent: true,
-                    userIDme: 0,
-                    userID: users[id].userID,
+                    userId: users[id].id,
                     name: users[id].username,
                 };
 
                 const updatedDialogs = [...dialogs, newDialog];
                 updatedDialogs.forEach((dialog) => {
-                    if (dialog.dialogID !== newDialog.dialogID) {
+                    if (dialog.dialogId !== newDialog.dialogId) {
                         dialog.isCurrent = false;
                     }
                 });
                 setDialogs(updatedDialogs);
             } else {
                 const updatedDialogs = dialogs.map((dialog) => {
-                    if (dialog.userID === users[id].userID) {
+                    if (dialog.userId === users[id].id) {
                         dialog.isCurrent = true;
                     } else {
                         dialog.isCurrent = false;
@@ -57,18 +73,6 @@ const Messager = () => {
     };
 
     //isActive
-    const currentDialog = (id) => {
-        setIsActive(id);
-
-        const updatedDialogs = dialogs.map((dialog) => ({
-            ...dialog,
-            isCurrent: dialog.userID === id,
-        }));
-
-        setDialogs(updatedDialogs);
-
-        createDialog(id);
-    };
 
     //input message
     const handleInputChange = (event) => {
@@ -91,17 +95,17 @@ const Messager = () => {
     const sendMessage = () => {
         if (inputValue.trim() !== "") {
             const newMessage = {
-                messageID: message.length,
-                userIDme: 0,
-                userID: isActive,
+                messageId: message.length,
+
+                userId: isActive,
                 isMe: true,
                 text: inputValue,
                 time: time,
             };
 
             dialogs.map((dialog) => {
-                if (dialog.userID === isActive) {
-                    dialog.lstMsg = newMessage.text;
+                if (dialog.userId === isActive) {
+                    return (dialog.lstMsg = newMessage.text);
                 }
             });
 
@@ -127,131 +131,20 @@ const Messager = () => {
                     </div>
 
                     <div className={classes.field}>
-                        <div className={classes.dialogs}>
-                            {searchValue
-                                ? users.map((userElement) => {
-                                      if (
-                                          userElement.username.includes(
-                                              searchValue
-                                          )
-                                      ) {
-                                          return (
-                                              <div
-                                                  key={userElement.userID}
-                                                  className={classes.my_dialogs}
-                                                  onClick={() =>
-                                                      currentDialog(
-                                                          userElement.userID
-                                                      )
-                                                  }
-                                              >
-                                                  <div
-                                                      className={
-                                                          classes.my_dialogs_names
-                                                      }
-                                                  >
-                                                      {userElement.username}
-                                                  </div>
-                                                  <div
-                                                      className={
-                                                          classes.my_dialogs_text
-                                                      }
-                                                  >
-                                                      {dialogs.map((el) => {
-                                                          if (
-                                                              el.userID ===
-                                                              userElement.userID
-                                                          ) {
-                                                              return el.lstMsg;
-                                                          }
-                                                      })}
-                                                  </div>
-                                              </div>
-                                          );
-                                      }
-                                  })
-                                : dialogs.slice().map((dialogElement) => {
-                                      return (
-                                          <div
-                                              key={dialogElement.dialogID}
-                                              className={
-                                                  dialogElement.isCurrent
-                                                      ? classes.my_dialogs_current
-                                                      : classes.my_dialogs
-                                              }
-                                              onClick={() =>
-                                                  currentDialog(
-                                                      dialogElement.userID
-                                                  )
-                                              }
-                                          >
-                                              <div
-                                                  className={
-                                                      classes.my_dialogs_names
-                                                  }
-                                              >
-                                                  {dialogElement.name}
-                                              </div>
-                                              <div
-                                                  className={
-                                                      classes.my_dialogs_text
-                                                  }
-                                              >
-                                                  {dialogElement.lstMsg}
-                                              </div>
-                                          </div>
-                                      );
-                                  })}
-                        </div>
+                        <MyDialogs
+                            value={searchValue}
+                            users={users}
+                            dialogs={dialogs}
+                            setDialogs={setDialogs}
+                            setActive={setIsActive}
+                            createDialog={createDialog}
+                        />
                     </div>
                 </div>
 
                 <div className={classes.right_side}>
                     <div className={classes.field}>
-                        <div className={classes.open_dialog}>
-                            {message
-                                .slice()
-                                .reverse()
-                                .map((messageElement) => {
-                                    if (isActive === messageElement.userID) {
-                                        return (
-                                            <div
-                                                key={messageElement.messageID}
-                                                className={
-                                                    messageElement.isMe
-                                                        ? classes.message_container
-                                                        : classes.message_container_reversed
-                                                }
-                                            >
-                                                <div
-                                                    className={
-                                                        messageElement.isMe
-                                                            ? classes.message
-                                                            : classes.message_reversed
-                                                    }
-                                                >
-                                                    <div
-                                                        className={
-                                                            classes.message_text
-                                                        }
-                                                    >
-                                                        {messageElement.text}
-                                                    </div>
-                                                    <div
-                                                        className={
-                                                            messageElement.isMe
-                                                                ? classes.message_time
-                                                                : classes.message_time_reversed
-                                                        }
-                                                    >
-                                                        {messageElement.time}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        );
-                                    }
-                                })}
-                        </div>
+                        <MyDialog message={message} active={isActive} />
                     </div>
 
                     <div className={classes.input_conteiner}>

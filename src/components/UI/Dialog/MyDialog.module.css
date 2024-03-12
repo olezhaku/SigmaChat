@@ -1,0 +1,63 @@
+.dialog {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-end;
+
+    margin: 5px 10px;
+    transition: all 0.2s linear;
+}
+
+.container__reversed {
+    margin: 5px 10px;
+    transition: all 0.2s linear;
+}
+
+.message {
+    background: black;
+    width: fit-content;
+    max-width: 80%;
+    border-radius: 10px;
+    padding: 10px;
+    word-wrap: break-word;
+}
+
+.message__reversed {
+    background: #222;
+    width: fit-content;
+    max-width: 80%;
+    border-radius: 10px;
+    padding: 10px;
+    word-wrap: break-word;
+}
+
+.container__reversed:first-child,
+.container:first-child {
+    margin-bottom: 10px;
+}
+
+.container__reversed:last-child,
+.container:last-child {
+    margin-top: 10px;
+}
+
+.text {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.time {
+    color: grey;
+    text-align: end;
+}
+
+.time__reversed {
+    color: grey;
+}

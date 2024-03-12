@@ -1,7 +1,5 @@
 import React from "react";
 import "./style/App.css";
-import { posts } from "./components/dataPosts";
-import Posts from "./pages/Posts/Posts";
 import Messager from "./pages/Messager/Messager";
 import Feedback from "./pages/Feedback/Feedback";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -18,12 +16,12 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/feedback" element={<Feedback />} />
-                    <Route
+                    {/* <Route
                         path="/posts"
                         element={posts.map((post) => (
                             <Posts key={post.description} {...post} />
                         ))}
-                    />
+                    /> */}
                     <Route path="/messager" element={<Messager />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
