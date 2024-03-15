@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import MyInput from "../../components/UI/Input/MyInput";
-import MyButton from "../../components/UI/Button/MyButton";
-import classes from "./Messager.module.css";
-import MyDialog from "../../components/UI/Dialog/MyDialog";
+
+import "../../styles/App.css";
 
 import { dataFetching } from "../../api/dataFetching";
-import MyDialogs from "../../components/UI/Dialogs/MyDialogs";
+import LeftSide from "../../components/LeftSide/LeftSide";
+import RightSide from "../../components/RightSide/RightSide";
+import { createMessage } from "../../store/messageSlice";
+import { useDispatch } from "react-redux";
 
 const Messager = () => {
     //hooks
@@ -13,12 +14,19 @@ const Messager = () => {
     const [searchValue, setSearchValue] = useState("");
     const [dialogs, setDialogs] = useState([]);
     const [isActive, setIsActive] = useState(null);
-    const [message, setMessage] = useState([]);
-    //
     const [users, setUsers] = useState([]);
+    const dispatch = useDispatch();
+
+    //message send
+    const sendMessage = () => {
+        if (inputValue.trim() !== "") {
+            dispatch(createMessage(inputValue, isActive));
+            setInputValue("");
+        }
+    };
 
     //search
-    const handleSearchChange = (event) => {
+    const handlerSearchChange = (event) => {
         setSearchValue(event.target.value);
     };
 
@@ -32,7 +40,7 @@ const Messager = () => {
             }
         }
         dataUsers();
-    }, [users]);
+    }, []);
 
     //dialogs
     const createDialog = (id) => {
@@ -43,7 +51,7 @@ const Messager = () => {
 
             if (!existingDialog) {
                 const newDialog = {
-                    dialogId: dialogs.length,
+                    dialogId: dialogs.length + 1,
                     isCurrent: true,
                     userId: users[id].id,
                     name: users[id].username,
@@ -73,95 +81,41 @@ const Messager = () => {
     };
 
     //isActive
+    const currentDialog = (id) => {
+        setIsActive(id);
+
+        const updatedDialogs = dialogs.map((dialog) => ({
+            ...dialog,
+            isCurrent: dialog.userId === id,
+        }));
+
+        setDialogs(updatedDialogs);
+
+        createDialog(id);
+    };
 
     //input message
-    const handleInputChange = (event) => {
+    const handlerInputChange = (event) => {
         setInputValue(event.target.value);
-    };
-
-    const hendleKeyPress = (event) => {
-        if (event.key === "Enter") {
-            sendMessage();
-        }
-    };
-
-    //time
-    const time =
-        new Date().toLocaleTimeString().slice(0, -3) +
-        " Σ " +
-        new Date().toLocaleDateString().slice(0, -5);
-
-    //message
-    const sendMessage = () => {
-        if (inputValue.trim() !== "") {
-            const newMessage = {
-                messageId: message.length,
-
-                userId: isActive,
-                isMe: true,
-                text: inputValue,
-                time: time,
-            };
-
-            dialogs.map((dialog) => {
-                if (dialog.userId === isActive) {
-                    return (dialog.lstMsg = newMessage.text);
-                }
-            });
-
-            setMessage([...message, newMessage]);
-            setInputValue("");
-        }
-    };
-
-    //validation
-    const isValid = () => {
-        return isActive !== null;
     };
 
     return (
         <div className="back">
-            <div className={classes.grid_container}>
-                <div className={classes.left_side}>
-                    <div className={classes.search_input}>
-                        <MyInput
-                            value={searchValue}
-                            onChange={handleSearchChange}
-                        />
-                    </div>
+            <div className="grid__container">
+                <LeftSide
+                    searchValue={searchValue}
+                    users={users}
+                    dialogs={dialogs}
+                    handlerSearchChange={handlerSearchChange}
+                    currentDialog={currentDialog}
+                />
 
-                    <div className={classes.field}>
-                        <MyDialogs
-                            value={searchValue}
-                            users={users}
-                            dialogs={dialogs}
-                            setDialogs={setDialogs}
-                            setActive={setIsActive}
-                            createDialog={createDialog}
-                        />
-                    </div>
-                </div>
-
-                <div className={classes.right_side}>
-                    <div className={classes.field}>
-                        <MyDialog message={message} active={isActive} />
-                    </div>
-
-                    <div className={classes.input_conteiner}>
-                        <div className={classes.message_input}>
-                            <MyInput
-                                value={inputValue}
-                                onChange={handleInputChange}
-                                onKeyPress={hendleKeyPress}
-                                disabled={!isValid()}
-                            />
-                        </div>
-
-                        <div className={classes.send_button}>
-                            <MyButton onClick={sendMessage}>/\</MyButton>
-                        </div>
-                    </div>
-                </div>
+                <RightSide
+                    isActive={isActive}
+                    inputValue={inputValue}
+                    handlerInputChange={handlerInputChange}
+                    sendMessage={sendMessage}
+                />
             </div>
         </div>
     );

@@ -1,3 +1,10 @@
+.left__side {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    gap: 10px;
+}
+
 .container {
     position: absolute;
     height: 100%;

@@ -1,5 +1,5 @@
 import React from "react";
-import "./style/App.css";
+import "./styles/App.css";
 import Messager from "./pages/Messager/Messager";
 import Feedback from "./pages/Feedback/Feedback";
 import { BrowserRouter, Route, Routes } from "react-router-dom";

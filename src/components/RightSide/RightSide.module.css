@@ -1,3 +1,19 @@
+.input__conteiner {
+    display: flex;
+    gap: 10px;
+}
+
+.message__input {
+    width: 100%;
+}
+
+.right__side {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap: 10px;
+}
+
 .dialog {
     position: absolute;
     height: 100%;
